@@ -1,5 +1,6 @@
 import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native"
-import MealDetail from "./MealDetail"
+import MealDetail from "../MealDetail"
+import { useNavigation } from "@react-navigation/native"
 
 interface IProps {
   item: {
@@ -20,13 +21,19 @@ interface IProps {
   onPress: () => void
 }
 
-const MealItem = ({ item, onPress }: { onPress: IProps['onPress'], item: IProps["item"] }) => {
+const MealItem = ({ item }: { item: IProps["item"] }) => {
+
+  const navigation = useNavigation()
+
+  const pressHandler = () => {
+    navigation.navigate('MealDetail', { mealId: item.id })
+  }
   return (
     <View style={styles.mealItem}>
       <Pressable
         android_ripple={{ color: '#ccc' }}
         style={({ pressed }) => pressed ? styles.buttonPressed : null}
-        onPress={onPress}
+        onPress={pressHandler}
       >
         <View style={styles.innerComponent}>
           <View>
